@@ -3,12 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constant.dart';
 import '../models/api_response.dart';
-import '../models/medecin.dart';
 import '../models/post.dart';
-import '../models/question.dart';
 import '../models/user.dart';
 
-Future<ApiResponse> post(String description, int user_id) async {
+Future<ApiResponse> post(String description, int userId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.post(Uri.parse(postsURL),
@@ -38,7 +36,7 @@ Future<ApiResponse> post(String description, int user_id) async {
 //UpdatePost
 
 
-Future<ApiResponse> Updatepost(String description, int user_id) async {
+Future<ApiResponse> Updatepost(String description, int userId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.put(Uri.parse(UpdatepostsURL),
@@ -69,7 +67,7 @@ Future<ApiResponse> Updatepost(String description, int user_id) async {
 //DeletePost
 
 
-Future<ApiResponse> Deletepost(String description, int post_id) async {
+Future<ApiResponse> Deletepost(String description, int postId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.delete(Uri.parse(DeletepostURL),

@@ -8,21 +8,22 @@ import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
 
-Future<ApiResponse> RendezVous(String time, String date, int patient_id, int medic_id) async {
+Future<ApiResponse> RendezVous(
+    String time, String date, int patientId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
-  final response = await http.post(Uri.parse(RendezVousURL),
-      headers: {'Accept': 'application/json'}, 
-      body: {
-        'time': time,
-        'date': date,
-        'patient_id': patient_id,
-        'medic_id': medic_id,
-       });
+  final response = await http.post(Uri.parse(RendezVousURL), headers: {
+    'Accept': 'application/json'
+  }, body: {
+    'time': time,
+    'date': date,
+    'patient_id': patientId,
+    'medic_id': medicId,
+  });
   if (response.statusCode == 200) {
     print("success-> " + response.statusCode.toString());
     print(response.body);
-    apiResponse.data = User.formJson(jsonDecode(response.body));
+    apiResponse.data = User.fromJson(jsonDecode(response.body));
     var data = json.decode(response.body);
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     await _prefs.setInt('patientId', data['data']['id']);

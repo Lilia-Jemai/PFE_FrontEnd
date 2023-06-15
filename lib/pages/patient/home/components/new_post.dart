@@ -152,7 +152,7 @@ class _NewPostState extends State<NewPost> {
                   ElevatedButton(
                     onPressed: _addPost,
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF013871),
+                      backgroundColor: Color(0xFF013871),
                     ),
                     child: Text(
                       "Poster",

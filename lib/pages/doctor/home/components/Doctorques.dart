@@ -35,7 +35,7 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                 Navigator.of(context).pop(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF013871), // Set the button color
+                backgroundColor: Color(0xFF013871), // Set the button color
               ),
               child: Text('Annuler'),
             ),
@@ -46,7 +46,7 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                 Navigator.of(context).pop(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF013871), // Set the button color
+                backgroundColor: Color(0xFF013871), // Set the button color
               ),
               child: Text('Envoyer'),
             ),
@@ -117,7 +117,7 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                             showReplyDialog(); // Show the reply dialog
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF013871),
+                            backgroundColor: Color(0xFF013871),
                             textStyle: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.bold,

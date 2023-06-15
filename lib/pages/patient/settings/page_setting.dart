@@ -20,7 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   var nom;
   var adresse;
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       setState(() {
         nom = (prefs.getString('nom') ?? '');

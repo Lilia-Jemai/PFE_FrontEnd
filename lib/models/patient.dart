@@ -7,29 +7,42 @@ class Patient {
   String? token;
   int? patient_id;
 
-  Patient({
-    this.medic,
-    this.user,
-    this.token,
-    this.patient_id,
-  });
+  Patient({this.medic, this.user, this.token, this.patient_id});
 
-  // Function to convert JSON data to Patient model
-  factory Patient.fromJson(Map<String, dynamic> json) {
+  Patient copyWith({
+    Medic? medic,
+    User? user,
+    String? token,
+    int? patient_id,
+  }) {
     return Patient(
-        token: json['token'],
-        patient_id: json['patient_id'],
-        user: User(
-          id: json['data']['id'],
-          name: json['data']['name'],
-          image: json['data']['image'],
-          email: json['data']['email'],
-          token: json['token'],
-        ),
-        medic: Medic(
-          medic_id: json['data']['medic_id'],
-          user: json['data']['id'],
-          token: json['token'],
-        ));
+      medic: medic ?? this.medic,
+      user: user ?? this.user,
+      token: token ?? this.token,
+      patient_id: patient_id ?? this.patient_id,
+    );
+  }
+
+  static Patient fromJson(Map<String, dynamic> json) {
+    return Patient(
+      medic: json['medic'] != null ? Medic.fromJson(json['medic']) : null,
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      token: json['token'],
+      patient_id: json['patient_id'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'medic': medic?.toJson(),
+      'user': user?.toJson(),
+      'token': token,
+      'patient_id': patient_id,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Patient(medic: $medic, user: $user, token: $token, patient_id: $patient_id)';
   }
 }

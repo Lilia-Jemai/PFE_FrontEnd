@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 
 class DoctorDisponibilities extends StatefulWidget {
@@ -31,10 +30,10 @@ class _DoctorDisponibilitiesState extends State<DoctorDisponibilities> {
             ),
             textTheme: theme.textTheme.copyWith(
               // Styles de texte personnalisés pour le calendrier
-              bodyText1: TextStyle(
+              bodyLarge: TextStyle(
                 color: Color(0xFF013871), // Couleur du texte du jour sélectionné
               ),
-              subtitle1: TextStyle(
+              titleMedium: TextStyle(
                 color: Colors.grey, // Couleur du texte des autres jours
               ),
             ),
@@ -66,7 +65,7 @@ class _DoctorDisponibilitiesState extends State<DoctorDisponibilities> {
         _toggleHour(hour);
       },
       style: ElevatedButton.styleFrom(
-        primary: _selectedHours.contains(hour) ? Colors.green : Colors.grey,
+        backgroundColor: _selectedHours.contains(hour) ? Colors.green : Colors.grey,
       ),
       child: Text(
         DateFormat('HH:mm').format(hour),
@@ -136,7 +135,7 @@ Container(
            SizedBox(height: 32.0),
 ElevatedButton(
   style: ElevatedButton.styleFrom(
-    primary: Color(0xFF013871),
+    backgroundColor: Color(0xFF013871),
   ),
   onPressed: () {
     // Valider les disponibilités

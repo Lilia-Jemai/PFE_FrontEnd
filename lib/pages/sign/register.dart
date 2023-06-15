@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sofiacare/pages/doctor/home/page_doc_home.dart';
 import 'package:sofiacare/pages/patient/home/page_pat_home.dart';
-import 'package:sofiacare/pages/sign/email_verif.dart';
 
 import '../../models/api_response.dart';
 import '../../models/user.dart';

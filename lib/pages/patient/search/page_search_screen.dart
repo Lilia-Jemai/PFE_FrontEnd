@@ -1,6 +1,5 @@
 // ignore_for_file: unused_field
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -14,8 +13,6 @@ import '../../components/tools/colors.dart';
 import '../../components/doctors_section.dart';
 import '../Notifications/page_notification_appoint.dart';
 import '../home/page_pat_home.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 
 class SearchScreen extends StatefulWidget {
   static String routeName = "/home";
@@ -88,7 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     selectedCity = tunisiaCities[0];
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       setState(() {
         id = (prefs.getInt('userId') ?? 0);

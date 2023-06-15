@@ -1,14 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sofiacare/pages/doctor/Appointment/page_appointment.dart';
 import 'package:sofiacare/pages/doctor/dossiers/page_doss_home.dart';
 import 'package:sofiacare/pages/doctor/home/components/Doctorques.dart';
 import 'package:sofiacare/pages/doctor/home/components/appointment_card.dart';
 import 'package:sofiacare/pages/doctor/settings/page_doc_setting_home.dart';
 import 'package:sofiacare/pages/patient/home/components/new_post.dart';
-import '../../../models/api_response.dart';
 import '../../components/utils/config.dart';
 
 class DoctorHome extends StatelessWidget {

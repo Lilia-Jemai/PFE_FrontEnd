@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sofiacare/pages/doctor/settings/page_doc_setting_home.dart';
-import 'package:sofiacare/pages/patient/settings/page_setting.dart';
 import 'package:sofiacare/pages/components/tools/colors.dart';
 
 class EditProfile extends StatefulWidget {
@@ -19,7 +18,7 @@ class _EditProfileState extends State<EditProfile> {
   var nom;
   var adresse;
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       setState(() {
         nom = (prefs.getString('nom') ?? '');

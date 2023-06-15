@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sofiacare/pages/patient/search/components/speciality.dart';
-import 'package:sofiacare/pages/welcome_animation/components/rendez_vous.dart';
 
 //STINGS--------------
 const baseURL = 'http://10.0.2.2:8000/api';

@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:sofiacare/models/patient.dart';
 import 'package:sofiacare/pages/doctor/dossiers/page_doss_home.dart';
 import 'package:sofiacare/pages/doctor/settings/page_doc_setting_home.dart';
 import 'package:sofiacare/pages/components/utils/config.dart';
+import 'package:sofiacare/services/patient_service.dart';
 
 import '../home/page_doc_home.dart';
 
-class AppointmentList extends StatelessWidget {
-  final List<Patient> patients = [
-    Patient(name: "Ghofrane Labidi", image: "labidi.jpg"),
-    Patient(name: "Aziz jawedi", image: "aziz.jpg"),
-    Patient(name: "Mounira ben Hadid", image: "mounira.jpg"),
-    Patient(name: "Hamadi Labidi", image: "hamadi.jpg"),
-    // Add more patients as needed
-  ];
+class AppointmentList extends StatefulWidget {
+  @override
+  State<AppointmentList> createState() => _AppointmentListState();
+}
+
+class _AppointmentListState extends State<AppointmentList> {
+  // final List<Patient> patients = [
+  //   Patient(name: "Ghofrane Labidi", image: "labidi.jpg"),
+  //   Patient(name: "Aziz jawedi", image: "aziz.jpg"),
+  //   Patient(name: "Mounira ben Hadid", image: "mounira.jpg"),
+  //   Patient(name: "Hamadi Labidi", image: "hamadi.jpg"),
+  //   // Add more patients as needed
+  // ];
+
+  ApiPatient apiPatient = ApiPatient();
+
+  List<Patient> patients = [];
+
+  bool isLoaded = true;
+
+  getallarch() async {
+    patients = await apiPatient.fetchPatients();
+    setState(() {
+      isLoaded = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getallarch();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +57,17 @@ class AppointmentList extends StatelessWidget {
           },
         ),
       ),
-      body: ListView.builder(
-        itemCount: patients.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AppointmentCard(patient: patients[index]),
-          );
-        },
-      ),
+      body: isLoaded
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: patients.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppointmentCard(patient: patients[index]),
+                );
+              },
+            ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -54,22 +82,18 @@ class AppointmentList extends StatelessWidget {
             tabs: [
               GButton(
                 icon: Icons.home,
-                
               ),
               GButton(
                 icon: Icons.file_copy,
-                
               ),
               GButton(
                 icon: Icons.calendar_month,
-                
               ),
               GButton(
                 icon: Icons.settings,
-                
               ),
             ],
-            selectedIndex: 2 ,
+            selectedIndex: 2,
             onTabChange: (index) {
               if (index == 0) {
                 Navigator.push(
@@ -86,9 +110,8 @@ class AppointmentList extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => AppointmentList()),
                 );
-                
               } else if (index == 3) {
-                 Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DoctorSettings()),
                 );
@@ -129,8 +152,8 @@ class _AppointmentCardState extends State<AppointmentCard> {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage:
-                        AssetImage('assets/images/${widget.patient.image}'),
+                    backgroundImage: AssetImage(
+                        'assets/images/${widget.patient.user!.image!}'),
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -138,7 +161,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        widget.patient.name,
+                        widget.patient.user!.name!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -159,7 +182,6 @@ class _AppointmentCardState extends State<AppointmentCard> {
               Config.spaceSmall,
               ScheduleCard(),
               Config.spaceSmall,
-              
             ],
           ),
         ),
@@ -214,11 +236,4 @@ class ScheduleCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class Patient {
-  final String name;
-  final String image;
-
-  Patient({required this.name, required this.image});
 }

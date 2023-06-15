@@ -371,7 +371,7 @@ ElevatedButton(
   child: Text('Ajouter un médicament'),
   onPressed: _showMedicationPopup,
   style: ElevatedButton.styleFrom(
-    primary: Color(0xFF013871),
+    backgroundColor: Color(0xFF013871),
   ),
 ),
 
@@ -381,7 +381,7 @@ ElevatedButton(
                 child: Text('Créer le dossier médical'),
                 onPressed: _createMedicalRecord,
   style: ElevatedButton.styleFrom(
-    primary: Color(0xFF013871),
+    backgroundColor: Color(0xFF013871),
   ),
               ),
             ],

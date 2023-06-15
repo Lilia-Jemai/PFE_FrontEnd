@@ -239,10 +239,10 @@ class ScheduleCard extends StatelessWidget {
                 ),
             textTheme: Theme.of(context).textTheme.copyWith(
                   // Custom text styles for the calendar
-                  bodyText1: TextStyle(
+                  bodyLarge: TextStyle(
                     color: Color(0xFF013871), // Text color of the selected day
                   ),
-                  subtitle1: TextStyle(
+                  titleMedium: TextStyle(
                     color: Colors.grey, // Text color of other days
                   ),
                 ),
@@ -273,11 +273,11 @@ class ScheduleCard extends StatelessWidget {
                     ),
                 textTheme: Theme.of(context).textTheme.copyWith(
                       // Custom text styles for the calendar
-                      bodyText1: TextStyle(
+                      bodyLarge: TextStyle(
                         color:
                             Color(0xFF013871), // Text color of the selected day
                       ),
-                      subtitle1: TextStyle(
+                      titleMedium: TextStyle(
                         color: Colors.grey, // Text color of other days
                       ),
                     ),

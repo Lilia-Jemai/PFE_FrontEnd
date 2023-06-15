@@ -5,10 +5,9 @@ import '../constant.dart';
 import '../models/api_response.dart';
 import '../models/medecin.dart';
 import '../models/post.dart';
-import '../models/question.dart';
 import '../models/user.dart';
 
-Future<ApiResponse> question(String question, int user_id, int medic_id) async {
+Future<ApiResponse> question(String question, int userId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.post(Uri.parse(questionURL),
@@ -39,7 +38,7 @@ Future<ApiResponse> question(String question, int user_id, int medic_id) async {
 //UpdateQuestion
 
 
-Future<ApiResponse> Updatequestion(String question, int user_id, int medic_id) async {
+Future<ApiResponse> Updatequestion(String question, int userId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.put(Uri.parse(UpdatequestionURL),
@@ -70,7 +69,7 @@ Future<ApiResponse> Updatequestion(String question, int user_id, int medic_id) a
 //DeleteQuestion
 
 
-Future<ApiResponse> Deletecomment(String question, int user_id, int medic_id) async {
+Future<ApiResponse> Deletecomment(String question, int userId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.post(Uri.parse(DeletequestionURL),
