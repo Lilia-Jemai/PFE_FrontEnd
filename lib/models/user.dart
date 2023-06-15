@@ -31,10 +31,10 @@ class User {
 
   static User fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
-      name: json['name'],
+      id: json['data']['id'],
+      name: json['data']['name'],
       image: json['image'],
-      email: json['email'],
+      email: json['data']['email'],
       token: json['token'],
     );
   }
