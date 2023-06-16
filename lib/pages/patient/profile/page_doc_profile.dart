@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sofiacare/models/user.dart';
 import 'package:sofiacare/pages/patient/search/page_search_screen.dart';
 import 'package:sofiacare/pages/patient/profile/components/presentation.dart';
 import 'package:sofiacare/pages/patient/profile/components/quest_ans.dart';
@@ -9,7 +10,8 @@ import '../../components/tools/colors.dart';
 import '../../sign/button/button_sign.dart';
 
 class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+  final User? doc;
+  const DoctorProfile({Key? key, this.doc}) : super(key: key);
 
   @override
   State<DoctorProfile> createState() => _DoctorProfileScreen();
@@ -173,7 +175,7 @@ class _DoctorProfileScreen extends State<DoctorProfile> {
                   },
                   controller: _controller,
                   children: [
-                    Presentation(),
+                    Presentation(doc: widget.doc),
                     PquestionAnswer(),
                   ],
                 ),

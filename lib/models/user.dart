@@ -34,6 +34,7 @@ class User {
   }
 
   static User fromJson(Map<String, dynamic> json) {
+    print(json);
     return User(
       id: json['id'],
       name: json['name'],

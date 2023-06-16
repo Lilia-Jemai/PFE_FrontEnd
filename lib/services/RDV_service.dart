@@ -12,14 +12,17 @@ Future<ApiResponse> rendezVous(
     String time, String date, int patientId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
-  final response = await http.post(Uri.parse(rendezVousURL), headers: {
-    'Accept': 'application/json'
-  }, body: {
-    'time': time,
-    'date': date,
-    'patient_id': patientId,
-    'medic_id': medicId,
-  });
+  final response = await http.post(Uri.parse(rendezVousURL),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: jsonEncode({
+        'time': time,
+        'date': date,
+        'patient_id': patientId,
+        'medic_id': medicId,
+      }));
   if (response.statusCode == 200) {
     print("success-> " + response.statusCode.toString());
     print(response.body);
@@ -30,6 +33,7 @@ Future<ApiResponse> rendezVous(
     await _prefs.setInt('medicId', data['data']['id']);
     await _prefs.setString('description', data['data']);
   } else if (response.statusCode == 422) {
+    print(response.body);
     print("failure -> " + response.statusCode.toString());
     final errors = jsonDecode(response.body)['errors'];
     apiResponse.error = errors[errors.keys.elementAt(0)][0];

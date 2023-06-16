@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sofiacare/pages/components/tools/colors.dart';
 import 'package:sofiacare/services/user_service.dart';
 
@@ -48,17 +49,15 @@ class _DoctorSectionState extends State<DoctorSection> {
       child: FutureBuilder<List<User>?>(
           future: getDocs(),
           builder: (BuildContext context, AsyncSnapshot<List<User>?> snapshot) {
-            print(snapshot.connectionState);
             if (snapshot.connectionState == ConnectionState.waiting)
               return CircularProgressIndicator();
             else if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              final meds = snapshot.data;
-                  print("===> $meds");
+              final meds = snapshot.data!.where((e) => e.role == "medecin").toList();
               return ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: meds!.length,
+                itemCount: meds.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -90,7 +89,7 @@ class _DoctorSectionState extends State<DoctorSection> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => DoctorProfile(),
+                                        builder: (context) => DoctorProfile(doc: meds[index]),
                                       ),
                                     );
                                   },
@@ -154,7 +153,7 @@ class _DoctorSectionState extends State<DoctorSection> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    meds[index].name!,
+                                    toBeginningOfSentenceCase(meds[index].name!)!,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,

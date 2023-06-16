@@ -44,7 +44,6 @@ class _LoginState extends State<Login> {
   void _saveAndRedirectToHome(User user) async {
     await SharedPreferencesHelper.setString('token', user.token ?? '');
     await SharedPreferencesHelper.setInt('userId', user.id ?? 0);
-
     if (user.role == 'patient') {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => SearchScreen()),
@@ -139,11 +138,6 @@ class _LoginState extends State<Login> {
                     _saveAndRedirectToHome(res.data as User);
                     Utils.showSnack(
                         context, CupertinoIcons.checkmark, true, 'Bienvenue!');
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      backgroundColor: Colors.green,
-                      behavior: SnackBarBehavior.floating,
-                      content: Text('Bienvenue!'),
-                    ));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       backgroundColor: Colors.orange,

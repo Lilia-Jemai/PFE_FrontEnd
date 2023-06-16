@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sofiacare/pages/doctor/home/page_doc_home.dart';
@@ -6,6 +7,7 @@ import 'package:sofiacare/pages/patient/home/page_pat_home.dart';
 import '../../models/api_response.dart';
 import '../../models/user.dart';
 import '../../services/user_service.dart';
+import '../../utils/Utils.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -57,8 +59,12 @@ class _RegisterState extends State<Register> {
         _addressController.text,
         _phoneNumberController.text,
         specialities.indexOf(selectedSpeciality ?? 'Dentist') + 1);
-    print(response!.error);
-    if (response.error == null) {_saveAndRedirectToHome(response.data as User);
+    if (response == null) {
+      Utils.showSnack(context, CupertinoIcons.exclamationmark_bubble, false,
+          'Oops, Notre service est au maintenance veuillez réessayer plus tard, Merci!');
+    }
+    if (response!.error == null) {
+      _saveAndRedirectToHome(response.data as User);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${response.error}')),

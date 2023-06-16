@@ -29,16 +29,7 @@ class UserService {
           body: {'email': email, 'password': password});
       if (response.statusCode == 200) {
         print("success-> " + response.statusCode.toString());
-        print(response.body);
-
-        apiResponse.data = User.fromJson(jsonDecode(response.body));
-        //var data = json.decode(response.body);
-        // SharedPreferences _prefs = await SharedPreferences.getInstance();
-        //await _prefs.setInt('userId', data['data']['id']);
-        /*await _prefs.setString('token', data['token']);
-    await _prefs.setString('nom', data['data']['name']);
-    await _prefs.setString('adresse', data['data']['adresse']);
-    await _prefs.setString('role', data['data']['role']);*/
+        apiResponse.data = User.fromJson(jsonDecode(response.body)['data']);
       } else if (response.statusCode == 422) {
         print("failure -> " + response.statusCode.toString());
         final errors = jsonDecode(response.body)['errors'];
@@ -134,7 +125,6 @@ class UserService {
      // print("rrrdata => $rawData");
 
       rawData.forEach((e) {
-        print("zeazeza$e");
         return users.add(User.fromJson(e));
       });
       print(users);

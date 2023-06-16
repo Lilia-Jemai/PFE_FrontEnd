@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sofiacare/pages/patient/Appointment_book/page_validate.dart';
+import 'package:sofiacare/utils/shared_pref.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../services/RDV_service.dart';
+import '../../../utils/Utils.dart';
 
 class Booking extends StatefulWidget {
+  final int? medID;
+  Booking({this.medID});
   @override
   State<Booking> createState() => _BookingState();
 }
@@ -147,17 +152,23 @@ class _BookingState extends State<Booking> {
         ),
         SizedBox(height: 30),
         ElevatedButton(
-          onPressed: () async  {
-           // var response = await rendezVous(focusedDay, );
+          onPressed: () async {
+            var userID = await SharedPreferencesHelper.getInt('userId');
+            print(userID);
+            var response = await rendezVous(selectedHours.toString(),
+                focusedDay.toIso8601String(), userID!, widget.medID!);
+            if(response.error == null){
+              Utils.showSnack(context,CupertinoIcons.check_mark, true, 'Rendez vous à été enregister avec success.');
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => Validate(),
               ),
-            );
+            );}
           },
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF013871)),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xFF013871)),
           ),
           child: Text('Valider le rendez-vous'),
         ),

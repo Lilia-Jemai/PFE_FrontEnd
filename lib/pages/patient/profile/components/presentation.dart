@@ -1,15 +1,18 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sofiacare/pages/patient/Appointment_book/page_booking.dart';
 import 'package:sofiacare/pages/components/tools/colors.dart';
 // ignore: unused_import
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../models/user.dart';
 import '../../../sign/button/button_login.dart';
 
 class Presentation extends StatefulWidget {
-  const Presentation({super.key});
+  final User? doc;
+  const Presentation({super.key, this.doc});
 
   @override
   _PresentationState createState() => _PresentationState();
@@ -19,7 +22,9 @@ class _PresentationState extends State<Presentation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: 
+      
+      ListView(
         children: [
           SizedBox(
             height: 100,
@@ -27,7 +32,7 @@ class _PresentationState extends State<Presentation> {
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Center(
                 child: Text(
-                  "Dr.Lilia Jemai",
+                  toBeginningOfSentenceCase(widget.doc!.name)!,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -205,7 +210,7 @@ class _PresentationState extends State<Presentation> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Booking(),
+                      builder: (context) => Booking(medID: widget.doc!.id),
                     ),
                   );
                 },
