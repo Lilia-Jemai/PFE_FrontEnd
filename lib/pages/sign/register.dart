@@ -7,8 +7,6 @@ import '../../models/api_response.dart';
 import '../../models/user.dart';
 import '../../services/user_service.dart';
 
-enum UserRole { patient, doctor }
-
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -25,7 +23,7 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneNumberController =
       TextEditingController(text: '+216');
   bool loading = false;
-  UserRole? userRole = UserRole.patient;
+  String? userRole;
   bool? _isChecked = false;
   List<String> specialities = [
     'Dentist',
@@ -50,12 +48,10 @@ class _RegisterState extends State<Register> {
   String? selectedSpeciality;
 
   void _register() async {
-    ApiResponse response = await register(
-      nomController.text,
-      emailController.text,
-      passwordController.text,
-      userRole == UserRole.patient ? 'patient' : 'doctor',
-    );
+    ApiResponse response = await register(nomController.text,
+        emailController.text, passwordController.text, userRole
+        // == User.role ? 'patient' : 'doctor',
+        );
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {
@@ -70,7 +66,7 @@ class _RegisterState extends State<Register> {
 
   void _saveAndRedirectToHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if (userRole == UserRole.doctor) {
+    if (userRole == 'doctor') {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => DoctorHome()),
         (route) => false,
@@ -187,10 +183,10 @@ class _RegisterState extends State<Register> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        leading: Radio<UserRole>(
-                          value: UserRole.patient,
+                        leading: Radio<String>(
+                          value: 'patient',
                           groupValue: userRole,
-                          onChanged: (UserRole? value) {
+                          onChanged: (String? value) {
                             setState(() {
                               userRole = value;
                             });
@@ -207,10 +203,10 @@ class _RegisterState extends State<Register> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        leading: Radio<UserRole>(
-                          value: UserRole.doctor,
+                        leading: Radio<String>(
+                          value: 'doctor',
                           groupValue: userRole,
-                          onChanged: (UserRole? value) {
+                          onChanged: (String? value) {
                             setState(() {
                               userRole = value;
                             });
@@ -221,7 +217,7 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 SizedBox(height: 15),
-                if (userRole == UserRole.doctor) ...[
+                if (userRole == 'doctor') ...[
                   DropdownButtonFormField<String>(
                     value: selectedSpeciality,
                     onChanged: (String? value) {

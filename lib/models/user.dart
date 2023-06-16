@@ -4,6 +4,7 @@ class User {
   String? image;
   String? email;
   String? token;
+  String? role; // New property
 
   User({
     this.id,
@@ -11,6 +12,7 @@ class User {
     this.image,
     this.email,
     this.token,
+    this.role, // Initialize the new property
   });
 
   User copyWith({
@@ -19,6 +21,7 @@ class User {
     String? image,
     String? email,
     String? token,
+    String? role, // Include the new property in the copyWith method
   }) {
     return User(
       id: id ?? this.id,
@@ -26,6 +29,7 @@ class User {
       image: image ?? this.image,
       email: email ?? this.email,
       token: token ?? this.token,
+      role: role ?? this.role,
     );
   }
 
@@ -33,9 +37,10 @@ class User {
     return User(
       id: json['data']['id'],
       name: json['data']['name'],
-      image: json['image'],
+      image: json['data']['image'],
       email: json['data']['email'],
-      token: json['token'],
+      token: json['data']['token'],
+      role: json['data']['role'], // Parse the 'role' property from JSON
     );
   }
 
@@ -46,11 +51,12 @@ class User {
       'image': image,
       'email': email,
       'token': token,
+      'role': role, // Include the 'role' property in the JSON representation
     };
   }
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, image: $image, email: $email, token: $token)';
+    return 'User(id: $id, name: $name, image: $image, email: $email, token: $token, role: $role)';
   }
 }

@@ -6,6 +6,7 @@ import 'package:sofiacare/pages/sign/reset_pas/mdp_oubli%C3%A9.dart';
 import '../../models/api_response.dart';
 import '../../models/user.dart';
 import '../../services/user_service.dart';
+import '../doctor/home/page_doc_home.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -22,26 +23,36 @@ class _LoginState extends State<Login> {
 
   void _login() async {
     ApiResponse response = await login(_txtEmail.text, _txtPassword.text);
+    print("\n $response \n");
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {
       setState(() {
-        _loading = false;
+        if (mounted) _loading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${response.error}'),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.error}')),
+      );
     }
   }
 
   void _saveAndRedirectToHome(User user) async {
+    print(".......... $user");
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token', user.token ?? '');
     await pref.setInt('userId', user.id ?? 0);
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => SearchScreen()),
-      (route) => false,
-    );
+
+    if (user.role == 'patient') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => SearchScreen()),
+        (route) => false,
+      );
+    } else {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => DoctorHome()),
+        (route) => false,
+      );
+    }
   }
 
   @override

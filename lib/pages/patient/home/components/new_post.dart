@@ -56,7 +56,7 @@ class _NewPostState extends State<NewPost> {
     }
   }
 
-  void _addPost() {
+  void _addPost() async {
     Post? postText;
     if (textController.text.isNotEmpty) {
       setState(() {
@@ -72,8 +72,8 @@ class _NewPostState extends State<NewPost> {
         postTextControllers
             .add(TextEditingController(text: postText!.description));
         textController.clear();
-        apiPosts.post(postText!.description!, 2);
       });
+      await apiPosts.post(postText!.description!, 2);
     }
     //     int? post_id;
     // String? title;

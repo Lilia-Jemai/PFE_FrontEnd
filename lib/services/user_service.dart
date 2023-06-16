@@ -30,12 +30,13 @@ Future<ApiResponse> login(String email, String password) async {
     print(response.body);
 
     apiResponse.data = User.fromJson(jsonDecode(response.body));
-    var data = json.decode(response.body);
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    await _prefs.setInt('userId', data['data']['id']);
-    await _prefs.setString('token', data['token']);
+    //var data = json.decode(response.body);
+   // SharedPreferences _prefs = await SharedPreferences.getInstance();
+    //await _prefs.setInt('userId', data['data']['id']);
+    /*await _prefs.setString('token', data['token']);
     await _prefs.setString('nom', data['data']['name']);
     await _prefs.setString('adresse', data['data']['adresse']);
+    await _prefs.setString('role', data['data']['role']);*/
   } else if (response.statusCode == 422) {
     print("failure -> " + response.statusCode.toString());
     final errors = jsonDecode(response.body)['errors'];
@@ -51,7 +52,7 @@ Future<ApiResponse> login(String email, String password) async {
 //Register
 
 Future<ApiResponse> register(
-    String name, String email, String password, String role) async {
+    String name, String email, String password, String? role) async {
   ApiResponse apiResponse = ApiResponse();
 
   final response = await http.post(Uri.parse(registerURL), headers: {
