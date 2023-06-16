@@ -1,6 +1,5 @@
 // ignore_for_file: unused_field
 
-
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -90,8 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {
         id = (prefs.getInt('userId') ?? 0);
         token = (prefs.getString('token') ?? '');
-        nomUtilisateur =(prefs.getString('nom') ?? '');
-        
+        nomUtilisateur = (prefs.getString('nom') ?? '');
       });
       /*
       try {
@@ -222,7 +220,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 2,
               child: GridView.builder(
                 itemCount: catNames.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

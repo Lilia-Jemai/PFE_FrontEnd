@@ -4,6 +4,7 @@ import 'package:sofiacare/constant.dart'
     show
         loginURL,
         registerURL,
+        searchMedicURL,
         sendEmailUrl,
         serverError,
         somethingWentWrong,
@@ -13,6 +14,7 @@ import 'package:sofiacare/constant.dart'
         userURL,
         valideCodeUrl;
 import 'package:sofiacare/models/api_response.dart';
+import 'package:sofiacare/models/medecin_mode.dart';
 import 'package:sofiacare/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -122,7 +124,7 @@ class UserService {
       //print("status code -> " + response.statusCode.toString());
       //print(response.body);
       final rawData = jsonDecode(response.body);
-     // print("rrrdata => $rawData");
+      // print("rrrdata => $rawData");
 
       rawData.forEach((e) {
         return users.add(User.fromJson(e));
@@ -261,5 +263,14 @@ class UserService {
     }
     print("status code -> " + response.statusCode.toString());
     return apiResponse;
+  }
+
+  static Future<Medecin?> getMed(String userID) async {
+    final response = await http.get(Uri.parse(searchMedicURL));
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Medecin.fromJson(jsonDecode(response.body));
+    }
+    return null;
   }
 }
