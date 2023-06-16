@@ -8,11 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../sign/button/button_login.dart';
 
-
 class Presentation extends StatefulWidget {
   const Presentation({super.key});
 
- @override
+  @override
   _PresentationState createState() => _PresentationState();
 }
 
@@ -25,27 +24,26 @@ class _PresentationState extends State<Presentation> {
           SizedBox(
             height: 100,
             child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 10),
               child: Center(
-              child: Text(
-                "Dr.Lilia Jemai",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF013871),
+                child: Text(
+                  "Dr.Lilia Jemai",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF013871),
+                  ),
                 ),
               ),
-            ),
             ),
           ),
           SizedBox(
             height: 25,
             child: Padding(
-          padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   Text(
                     "Diplomes et formations",
                     style: TextStyle(
@@ -60,8 +58,7 @@ class _PresentationState extends State<Presentation> {
           ),
           SizedBox(
             height: 30,
-            child: 
-            Padding(
+            child: Padding(
               padding: EdgeInsets.only(left: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,54 +162,56 @@ class _PresentationState extends State<Presentation> {
               ),
             ),
           ),
-           SizedBox(
-  height: 30,
-  child: Padding(
-    padding: EdgeInsets.only(left: 10),
-    // ignore: duplicate_ignore
-    child: GestureDetector(
-      onTap: () async {
-        final phoneNumber = '+21627438527';
-        final url = 'tel:$phoneNumber';
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          throw 'Could not launch $url';
-        }
-      },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "+21627438527",
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.blue,
-              decoration: TextDecoration.underline,
+          SizedBox(
+            height: 30,
+            child: Padding(
+              padding: EdgeInsets.only(left: 10),
+              // ignore: duplicate_ignore
+              child: GestureDetector(
+                onTap: () async {
+                  final phoneNumber = '+21627438527';
+                  final url = 'tel:$phoneNumber';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "+21627438527",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ],
-      ),
-    ),
-  ),
-),
-Spacer(),
-
-SizedBox(height: 30),
-            Padding(
-                  padding: const EdgeInsets.symmetric(
-        horizontal: 20.0,
-      ),
-              child: ButtonLogin(onTap: (){  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  Booking(),
-                          ),
-                        );}, text: "Prenez un Rendez-vous"),
+          Spacer(),
+          SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
             ),
-
-
+            child: ButtonLogin(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Booking(),
+                    ),
+                  );
+                },
+                text: "Prenez un Rendez-vous"),
+          ),
+          SizedBox(height: 24,)
         ],
       ),
     );

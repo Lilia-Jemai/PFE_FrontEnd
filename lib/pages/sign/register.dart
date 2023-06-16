@@ -20,16 +20,17 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController phoneNumberController =
+  TextEditingController _phoneNumberController =
       TextEditingController(text: '+216');
-  bool loading = false;
+  TextEditingController _addressController = TextEditingController();
+  bool _loading = false;
   String? userRole;
   bool? _isChecked = false;
   List<String> specialities = [
     'Dentist',
     'Généraliste',
     'Anesthésiologie',
-    ' Cardiologie',
+    'Cardiologie',
     'Dermatologie',
     'Endocrinologie',
     'Gastro-entérologie',
@@ -48,16 +49,17 @@ class _RegisterState extends State<Register> {
   String? selectedSpeciality;
 
   void _register() async {
-    ApiResponse response = await register(nomController.text,
-        emailController.text, passwordController.text, userRole
-        // == User.role ? 'patient' : 'doctor',
-        );
-    if (response.error == null) {
-      _saveAndRedirectToHome(response.data as User);
+    ApiResponse? response = await UserService.register(
+        nomController.text,
+        emailController.text,
+        passwordController.text,
+        userRole,
+        _addressController.text,
+        _phoneNumberController.text,
+        specialities.indexOf(selectedSpeciality ?? 'Dentist') + 1);
+    print(response!.error);
+    if (response.error == null) {_saveAndRedirectToHome(response.data as User);
     } else {
-      setState(() {
-        if (mounted) loading = false;
-      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${response.error}')),
       );
@@ -66,13 +68,17 @@ class _RegisterState extends State<Register> {
 
   void _saveAndRedirectToHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if (userRole == 'doctor') {
-      Navigator.of(context).pushAndRemoveUntil(
+    await pref.setString('token', user.token ?? '');
+    await pref.setInt('userId', user.id ?? 0);
+    if (userRole == 'medecin') {
+      print("but i got in ?");
+      await Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => DoctorHome()),
         (route) => false,
       );
     } else {
-      Navigator.of(context).pushAndRemoveUntil(
+      print("but i got in ?2");
+      await Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => PatHome()),
         (route) => false,
       );
@@ -204,7 +210,7 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                         leading: Radio<String>(
-                          value: 'doctor',
+                          value: 'medecin',
                           groupValue: userRole,
                           onChanged: (String? value) {
                             setState(() {
@@ -217,7 +223,7 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 SizedBox(height: 15),
-                if (userRole == 'doctor') ...[
+                if (userRole == 'medecin') ...[
                   DropdownButtonFormField<String>(
                     value: selectedSpeciality,
                     onChanged: (String? value) {
@@ -244,6 +250,7 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: _addressController,
                     validator: (val) =>
                         val!.isEmpty ? 'Adresse required' : null,
                     decoration: InputDecoration(
@@ -257,7 +264,7 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    controller: phoneNumberController,
+                    controller: _phoneNumberController,
                     validator: (val) =>
                         val!.isEmpty ? 'Numéro de téléphone required' : null,
                     decoration: InputDecoration(
@@ -291,22 +298,22 @@ class _RegisterState extends State<Register> {
               onPressed: () {
                 if (formkey.currentState!.validate()) {
                   setState(() {
-                    loading = true;
+                    _loading = true;
                   });
                   _register();
+                  setState(() {
+                    _loading = false;
+                  });
                 }
               },
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: loading
-                    ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : Text(
-                        'Register',
-                        style: TextStyle(fontSize: 16),
-                      ),
-              ),
+              child: _loading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Text(
+                      'Inscrire',
+                      style: TextStyle(color: Colors.white),
+                    ),
             ),
           ],
         ),

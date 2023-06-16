@@ -19,7 +19,7 @@ class _MdpOublieState extends State<MdpOublie> {
   bool loading = false;
 
   void _sendEmail() async {
-    ApiResponse response = await SendEmail(txtEmail.text);
+    ApiResponse response = await UserService.SendEmail(txtEmail.text);
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {

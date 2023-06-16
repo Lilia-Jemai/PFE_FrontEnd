@@ -8,11 +8,11 @@ import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
 
-Future<ApiResponse> RendezVous(
+Future<ApiResponse> rendezVous(
     String time, String date, int patientId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
-  final response = await http.post(Uri.parse(RendezVousURL), headers: {
+  final response = await http.post(Uri.parse(rendezVousURL), headers: {
     'Accept': 'application/json'
   }, body: {
     'time': time,

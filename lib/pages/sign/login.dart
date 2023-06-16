@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sofiacare/pages/patient/search/page_search_screen.dart';
@@ -6,6 +7,8 @@ import 'package:sofiacare/pages/sign/reset_pas/mdp_oubli%C3%A9.dart';
 import '../../models/api_response.dart';
 import '../../models/user.dart';
 import '../../services/user_service.dart';
+import '../../utils/Utils.dart';
+import '../../utils/shared_pref.dart';
 import '../doctor/home/page_doc_home.dart';
 
 class Login extends StatefulWidget {
@@ -21,26 +24,26 @@ class _LoginState extends State<Login> {
   TextEditingController _txtPassword = TextEditingController();
   bool _loading = false;
 
-  void _login() async {
-    ApiResponse response = await login(_txtEmail.text, _txtPassword.text);
+  Future<bool?> _login() async {
+    ApiResponse? response = await UserService.login(_txtEmail.text, _txtPassword.text);
     print("\n $response \n");
-    if (response.error == null) {
-      _saveAndRedirectToHome(response.data as User);
+    if (response!.error == null) {
+      return true;
     } else {
-      setState(() {
-        if (mounted) _loading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${response.error}')),
-      );
+      return false;
     }
   }
 
+  @override
+  void initState() {
+    var token = SharedPreferencesHelper.getString('token');
+    if (token != null) {}
+    super.initState();
+  }
+
   void _saveAndRedirectToHome(User user) async {
-    print(".......... $user");
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('token', user.token ?? '');
-    await pref.setInt('userId', user.id ?? 0);
+    await SharedPreferencesHelper.setString('token', user.token ?? '');
+    await SharedPreferencesHelper.setInt('userId', user.id ?? 0);
 
     if (user.role == 'patient') {
       Navigator.of(context).pushAndRemoveUntil(
@@ -66,7 +69,12 @@ class _LoginState extends State<Login> {
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: _txtEmail,
-              validator: (val) => val!.isEmpty ? 'Invalid email address' : null,
+              validator: (val) {
+                final bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(val!);
+                return emailValid ? null : 'Veuillez entrer un email vailde!';
+              },
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.email),
                 labelText: 'Email',
@@ -112,32 +120,60 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(height: 10),
-            _loading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : TextButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _loading = true;
-                          _login();
-                        });
-                      }
-                    },
-                    child: Text(
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  setState(() {
+                    _loading = true;
+                  });
+                  ApiResponse? res =
+                      await UserService.login(_txtEmail.text, _txtPassword.text);
+                  if (res == null) {
+                    Utils.showSnack(
+                        context,
+                        CupertinoIcons.exclamationmark_bubble,
+                        false,
+                        'Nous avons un probleme avec notre service veuillez retourner ultérieurement. Merci pour votre compréhention');
+                  } else if (res.error == null) {
+                    _saveAndRedirectToHome(res.data as User);
+                    Utils.showSnack(
+                        context, CupertinoIcons.checkmark, true, 'Bienvenue!');
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.green,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('Bienvenue!'),
+                    ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.orange,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('Veuillez verifier vos identifiants!'),
+                    ));
+                  }
+
+                  setState(() {
+                    _loading = false;
+                  });
+                }
+              },
+              child: _loading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Text(
                       'Valider',
                       style: TextStyle(color: Colors.white),
                     ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => Color(0xFF013871),
-                      ),
-                      padding: MaterialStateProperty.resolveWith(
-                        (states) => EdgeInsets.symmetric(vertical: 10),
-                      ),
-                    ),
-                  ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateColor.resolveWith(
+                  (states) => Color(0xFF013871),
+                ),
+                padding: MaterialStateProperty.resolveWith(
+                  (states) => EdgeInsets.symmetric(vertical: 10),
+                ),
+              ),
+            ),
           ],
         ),
       ),

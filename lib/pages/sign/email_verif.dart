@@ -24,7 +24,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   bool _loading = false;
   void _SendEmail() async {
-    ApiResponse response = await SendEmail(codeController.text);
+    ApiResponse response = await UserService.SendEmail(codeController.text);
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {

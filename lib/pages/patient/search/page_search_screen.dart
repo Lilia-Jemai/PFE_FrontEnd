@@ -136,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: 50),
+                  SizedBox(height: 40),
                   ListTile(
                     leading: IconButton(
                       icon: Icon(Icons.settings),

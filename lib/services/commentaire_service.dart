@@ -41,7 +41,7 @@ Future<ApiResponse> question(String question, int userId, int medicId) async {
 Future<ApiResponse> Updatequestion(String question, int userId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
-  final response = await http.put(Uri.parse(UpdatequestionURL),
+  final response = await http.put(Uri.parse(updateQuestionURL),
       headers: {'Accept': 'application/json'},
       body: {'question':question, 'user_id': User,'medic_id':Medic});
   if (response.statusCode == 200) {
@@ -72,7 +72,7 @@ Future<ApiResponse> Updatequestion(String question, int userId, int medicId) asy
 Future<ApiResponse> Deletecomment(String question, int userId, int medicId) async {
   ApiResponse apiResponse = ApiResponse();
 
-  final response = await http.post(Uri.parse(DeletequestionURL),
+  final response = await http.post(Uri.parse(deleteQuestionURL),
       headers: {'Accept': 'application/json'},
       body: {'question':question, 'user_id': User,'medic_id':Medic});
   if (response.statusCode == 200) {

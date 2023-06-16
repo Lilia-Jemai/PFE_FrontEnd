@@ -20,7 +20,7 @@ class _VerificationState extends State<Verification> {
 
   TextEditingController codeController = TextEditingController();
   void _VerifCode() async {
-    ApiResponse response = await VerifCode(codeController.text);
+    ApiResponse response = await UserService.VerifCode(codeController.text);
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {

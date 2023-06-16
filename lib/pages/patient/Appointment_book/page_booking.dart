@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sofiacare/pages/patient/Appointment_book/page_validate.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../services/RDV_service.dart';
+
 class Booking extends StatefulWidget {
   @override
   State<Booking> createState() => _BookingState();
@@ -145,7 +147,8 @@ class _BookingState extends State<Booking> {
         ),
         SizedBox(height: 30),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async  {
+           // var response = await rendezVous(focusedDay, );
             Navigator.push(
               context,
               MaterialPageRoute(

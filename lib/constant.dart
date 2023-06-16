@@ -11,33 +11,33 @@ const valideCodeUrl = baseURL + '/auth/verify_pass';
 const updatePassUrl = baseURL + '/auth/update_pass';
 const userURL = baseURL + '/users';
 const postsURL = baseURL + '/post';
-const UpdatepostsURL = baseURL + '/post/{id}';
-const DeletepostURL = baseURL + '/post/{id}';
+const updatePostsURL = baseURL + '/post/{id}';
+const deletePostURL = baseURL + '/post/{id}';
 //Commentaire
 const commentURL = baseURL + '/comment';
-const UpdatecommentURL = baseURL + '/comment/{id}';
-const DeletecommentURL = baseURL + '/comment/{id}';
+const updateCommentURL = baseURL + '/comment/{id}';
+const deleteCommentURL = baseURL + '/comment/{id}';
 const likeURL = baseURL + '/like';
 
 //Question
 const questionURL = baseURL + '/question';
-const UpdatequestionURL = baseURL + '/question/{id}';
-const DeletequestionURL = baseURL + '/question/{id}';
+const updateQuestionURL = baseURL + '/question/{id}';
+const deleteQuestionURL = baseURL + '/question/{id}';
 //reponse
 const responseURL = baseURL + '/response';
-const UpdateresponseURL = baseURL + '/response/{id}';
-const DeleteresponseURL = baseURL + '/response/{id}';
+const updateResponseURL = baseURL + '/response/{id}';
+const deleteResponseURL = baseURL + '/response/{id}';
 
 const searchURL = baseURL + '/patient/user/{user_id}';
 const patientURL = baseURL + '/patient';
 const patienSearchtURL = baseURL + '/patient/search';
-const SpecialityURL = baseURL + '/specialite';
-const SpecialitySearchURL = baseURL + '/specialite/search';
+const specialityURL = baseURL + '/specialite';
+const specialitySearchURL = baseURL + '/specialite/search';
 const searchMedicURL = baseURL + '/medic/user/{user_id}';
 const medictURL = baseURL + '/medic';
 const medicSearchtURL = baseURL + '/medic/search';
-const RendezVousURL = baseURL + '/rendvous';
-const RendezVousSearchURL = baseURL + '/rendevous/search';
+const rendezVousURL = baseURL + '/rendvous';
+const rendezVousSearchURL = baseURL + '/rendevous/search';
 const dossierURL = baseURL + '/dossier';
 const dossierSearchURL = baseURL + '/dossier/search';
 

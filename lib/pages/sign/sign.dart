@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sofiacare/pages/sign/register.dart';
 
-
 import '../components/tools/colors_palette.dart';
 import 'button/button_sign.dart';
 import 'login.dart';
@@ -28,7 +27,6 @@ class _SignState extends State<Sign> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -46,21 +44,20 @@ class _SignState extends State<Sign> {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-        
           body: Column(
-  children: [
-    SizedBox(
-  height: 130, // Adjust the height as per your requirement
-  width: double.infinity,
-  child: Container(
-    padding: const EdgeInsets.only(bottom: 20),
-    child: Image.asset(
-      'assets/images/Asset.png',
-      fit: BoxFit.contain, // Adjust the fit as per your requirement
-    ),
-  ),
-),
-
+            children: [
+              SizedBox(
+                height: 130, // Adjust the height as per your requirement
+                width: double.infinity,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Image.asset(
+                    'assets/images/Asset.png',
+                    fit: BoxFit
+                        .contain, // Adjust the fit as per your requirement
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -125,7 +122,6 @@ class _SignState extends State<Sign> {
                       currentPage = value;
                     });
                   },
-              
                   controller: _controller,
                   children: const [
                     Login(),

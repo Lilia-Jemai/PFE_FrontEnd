@@ -22,7 +22,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController ConfirmPassword = TextEditingController();
   bool _loading = false;
   void _ModifierMotDePasse() async {
-    ApiResponse response = await ModifierMotDePasse(PasswordController.text);
+    ApiResponse response = await UserService.ModifierMotDePasse(PasswordController.text);
     if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
     } else {

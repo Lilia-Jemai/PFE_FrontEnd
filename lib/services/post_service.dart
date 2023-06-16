@@ -56,7 +56,7 @@ class ApiPosts {
   Future<ApiResponse> Updatepost(String description, int userId) async {
     ApiResponse apiResponse = ApiResponse();
 
-    final response = await http.put(Uri.parse(UpdatepostsURL),
+    final response = await http.put(Uri.parse(updatePostsURL),
         headers: {'Accept': 'application/json'},
         body: {'description': post, 'post_id': Post});
     if (response.statusCode == 200) {
@@ -85,7 +85,7 @@ class ApiPosts {
   Future<ApiResponse> Deletepost(String description, int postId) async {
     ApiResponse apiResponse = ApiResponse();
 
-    final response = await http.delete(Uri.parse(DeletepostURL),
+    final response = await http.delete(Uri.parse(deletePostURL),
         headers: {'Accept': 'application/json'},
         body: {'description': post, 'post_id': Post});
     if (response.statusCode == 200) {

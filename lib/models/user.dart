@@ -35,12 +35,12 @@ class User {
 
   static User fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['data']['id'],
-      name: json['data']['name'],
-      image: json['data']['image'],
-      email: json['data']['email'],
-      token: json['data']['token'],
-      role: json['data']['role'], // Parse the 'role' property from JSON
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      email: json['email'],
+      token: json['token'],
+      role: json['role'], // Parse the 'role' property from JSON
     );
   }
 
